@@ -1,4 +1,5 @@
 ---
+cluster_mode: "on"
 cluster_name: elasticsearch
 node_name: "{{ host_name }}"
 path_data: "/var/lib/elasticsearch"
@@ -6,12 +7,4 @@ path_logs: "/var/log/elasticsearch"
 network_host: "{{ ansible_host }}"
 elasticsearch_port: 9292
 nginx_port: 9200
-gateway_recovery: 3
 es_server_name: es.my.local
-seed_hosts:
-  - es01.my.local
-  - es02.my.local
-  - es03.my.local
-master_nodes:
-  - es01.my.local
-  - es02.my.local

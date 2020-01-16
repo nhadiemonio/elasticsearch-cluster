@@ -1,4 +1,14 @@
 ---
+  - name: check cluster mode variable
+    fail:
+      msg: "FAILED: Invalid Cluster Mode {{ cluster_mode }}"
+    when: cluster_mode != "on" and cluster_mode != "off"
+
+  - name: check cluster mode variable
+    fail:
+      msg: "FAILED: Invalid Cluster Count"
+    when: cluster_mode == "on" and groups['elasticsearch']|length<2
+
   - include_tasks: ubuntu-install.yml
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
@@ -28,4 +38,5 @@
       dest: /etc/nginx/conf.d/default.conf
       owner: root
       group: root
+    when: cluster_mode == "on"
     notify: restart nginx

@@ -37,13 +37,14 @@ http.port: {{ elasticsearch_port }}
 # Pass an initial list of hosts to perform discovery when this node is started:
 # The default list of hosts is ["127.0.0.1", "[::1]"]
 #
-discovery.seed_hosts: [{% for item in seed_hosts %}{% if loop.index == loop.length %} "{{ item }}" {% else %} "{{ item }}", {% endif %}{% endfor %}]
+discovery.seed_hosts: [{% for seed_hosts in groups['elasticsearch'] %}{% if loop.index == loop.length %} "{{ hostvars[seed_hosts].host_name }}" {% else %} "{{ hostvars[seed_hosts].host_name }}", {% endif %}{% endfor %}]
 #
-cluster.initial_master_nodes: [{% for item in master_nodes %}{% if loop.index == loop.length %} "{{ item }}" {% else %} "{{ item }}", {% endif %}{% endfor %}]
-#
+{% if cluster_mode == "on" %}
+cluster.initial_master_nodes: [{% for master_nodes in groups['elasticsearch'] %}{% if loop.index == loop.length %} "{{ hostvars[master_nodes].host_name }}" {% else %} "{{ hostvars[master_nodes].host_name }}", {% endif %}{% endfor %}]
 # ---------------------------------- Gateway -----------------------------------
 #
 # Block initial recovery after a full cluster restart until N nodes are started:
 #
-gateway.recover_after_nodes: {{ gateway_recovery }}
+gateway.recover_after_nodes: {{ groups['elasticsearch']|length - 1 }}
+{% endif %}
 #
