@@ -40,3 +40,11 @@
       group: root
     when: cluster_mode == "on"
     notify: restart nginx
+
+  - name: configure kibana
+    template:
+      src: kibana.yml.j2
+      dest: /etc/kibana/kibana.yml
+      owner: root
+      group: kibana
+    notify: restart kibana

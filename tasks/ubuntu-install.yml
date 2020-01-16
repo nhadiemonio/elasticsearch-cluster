@@ -13,7 +13,7 @@
     apt_key:
       keyserver: keyserver.ubuntu.com
       id: ABF5BD827BD9BF62
-      
+
   - name: enable nginx repository
     apt_repository:
       repo: deb http://nginx.org/packages/ubuntu/ bionic nginx
@@ -22,6 +22,7 @@
   - name: install packages
     apt:
       name: [
+        "kibana",
         "elasticsearch",
         "default-jdk",
         "nginx"
