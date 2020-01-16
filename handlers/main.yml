@@ -1,0 +1,32 @@
+---
+  - name: start elasticsearch
+    systemd:
+      name: elasticsearch
+      enabled: yes
+      state: started
+
+  - name: restart elasticsearch
+    systemd:
+      name: elasticsearch
+      state: restarted
+
+  - name: stop elasticsearch
+    systemd:
+      name: elasticsearch
+      state: stopped
+
+  - name: start nginx
+    systemd:
+      name: nginx
+      enabled: yes
+      state: started
+
+  - name: restart nginx
+    systemd:
+      name: nginx
+      state: restarted
+
+  - name: stop nginx
+    systemd:
+      name: nginx
+      state: stopped
